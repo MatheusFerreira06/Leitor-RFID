@@ -1,0 +1,61 @@
+//Carrega a biblioteca LiquidCrystal
+#include <LiquidCrystal.h>
+ 
+//Define os pinos que serão utilizados para ligação ao display
+LiquidCrystal lcd(13, 11, 5, 4, 3, 2);
+
+
+int m1 = 9;
+int redLed = 12;
+int greenLed = 7;
+int m2 = 10;
+int sucessButton = 8;
+int failedButton = 6;
+
+ 
+void setup()
+{
+  //Define o número de colunas e linhas do LCD
+  lcd.begin(16, 2);
+  pinMode(sucessButton,INPUT);
+  pinMode(failedButton,INPUT);
+  pinMode(m1,OUTPUT);
+  pinMode(m2,OUTPUT);
+  pinMode(redLed,OUTPUT);
+  pinMode(greenLed,OUTPUT);
+  initialMessage();
+}
+ 
+void loop()
+{
+  if(digitalRead(sucessButton) == 1)
+  {
+    lcd.clear();
+    lcd.print("Cartao validado");
+    lcd.setCursor(0,1);
+    lcd.print("com sucesso");
+    digitalWrite(m1,HIGH);
+    digitalWrite(greenLed,HIGH);
+    delay(1000);
+    initialMessage();
+    digitalWrite(m1,LOW);
+    digitalWrite(greenLed,LOW);
+  }
+  else if(digitalRead(failedButton) == 1)
+  {
+    lcd.clear();
+    digitalWrite(redLed,HIGH);
+    lcd.print("Cartao Invalido");
+    delay(1000);
+    initialMessage();
+    digitalWrite(redLed,LOW);
+  }
+}
+
+void initialMessage()
+{
+  lcd.clear();
+  lcd.print(" Aproxime o seu");  
+  lcd.setCursor(0,1);
+  lcd.print("cartao do leitor");  
+}
